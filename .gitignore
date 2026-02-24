@@ -15,9 +15,6 @@ venv/
 env/
 .env/
 
-# Reports (generated at runtime)
-reports/
-
 # OS
 .DS_Store
 Thumbs.db
