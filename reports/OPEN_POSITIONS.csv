@@ -1,0 +1,5 @@
+symbol,strategy,signal_date,trend,recommended_entry,target,stoploss,t_plus,entry_date,entry_price,expected_exit_date,exit_date,exit_price,exit_reason,pnl_pct,status
+FPT,Breakout,2026-02-25,Giam,89.01,82.86,91.77,3,2026-02-26,,2026-03-03,,,,,pending
+HPG,Breakout,2026-02-25,Tang,29.53,31.57,28.61,3,2026-02-26,,2026-03-03,,,,,pending
+STB,Breakout,2026-02-25,Tang,66.77,71.37,64.7,3,2026-02-26,,2026-03-03,,,,,pending
+TPB,Breakout,2026-02-25,Tang,18.67,19.96,18.09,3,2026-02-26,,2026-03-03,,,,,pending
