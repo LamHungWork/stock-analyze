@@ -95,6 +95,8 @@ def predict(analysis: dict) -> dict:
         analysis.get("sma20"), close,
     )
 
+    t_plus = recommend_t_plus(rr_ratio, volume_spike)
+
     return {
         "trend": trend,
         "target": target,
@@ -102,7 +104,24 @@ def predict(analysis: dict) -> dict:
         "rr_ratio": rr_ratio,
         "success_rate": success_rate,
         "reason": reason,
+        "t_plus": t_plus,
     }
+
+
+def recommend_t_plus(rr_ratio: float, volume_spike: bool) -> int:
+    """
+    Recommend holding period (T+3 to T+5) based on signal strength.
+
+    T+3 if strong signal (RR > 2.0 and volume spike)
+    T+4 if medium signal (RR 1.5-2.0)
+    T+5 if weak signal (RR < 1.5)
+    """
+    if rr_ratio > 2.0 and volume_spike:
+        return 3
+    elif rr_ratio >= 1.5:
+        return 4
+    else:
+        return 5
 
 
 # ── Private helpers ────────────────────────────────────────────────────────────

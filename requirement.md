@@ -1,83 +1,15 @@
-Technical Requirements: VN30 Technical Analysis Tool (Python)
-1. Tổng quan hệ thống
-Xây dựng công cụ Python chạy cục bộ (Local) để phân tích kỹ thuật rổ chỉ số VN30 vào cuối mỗi phiên giao dịch. Hệ thống sử dụng Fibonacci và SMA để dự đoán xu hướng ngắn hạn (T+5 đến T+10).
+cần update thêm cho chức năng analyz hiện tại như sau:
+- với mỗi file report của mã mỗi ngày sẽ có thêm phần giả sử mỗi ngày đều đánh mã đó 100 cổ phiếu và có take profit, stop loss như thế nào thì sẽ có lợi nhuận hay lỗ bao nhiêu, và tổng cộng sau 1 tháng sẽ lãi hay lỗ bao nhiêu, để từ đó có thể đánh giá được hiệu quả của mã đó trong việc phân tích kỹ thuật.
+- từ phần tích kỹ thuật đưa ra gợi ý nên đánh t+ bao lâu và take profit, stop loss bao nhiêu là hợp lý. t+ không quá dài nhé.
+- từ các dữ liệu đó sau khi đến ngày kết thúc take profit,stop loss dự kiến sẽ có phần đánh giá lại xem nếu như đánh t+ theo gợi ý thì sẽ lãi hay lỗ bao nhiêu, để từ đó có thể đánh giá được hiệu quả của gợi ý đó.
+2. tôi sẽ sử dụng nhiều dạng phân tích kỹ thuật khác nhau để phân tích dựa trên bộ dữ liệu. từ đó tìm ra bộ phân tích kỹ thuật có tỷ lệ thành công cao để sử dụng lâu dài.
+- phân tích kỹ thuật có thể là group các kỹ thuật phân tích phù hợp với nhau.
+3. lấy dữ liệu chart chứng khoán từ năm 2025 đến hiện tại. down load và lưu trữ lại làm dữ liệu đánh giá phân tích kỹ thuật. từ đó có thể đưa ra các giải định phận tích dựa trên bộ data đã có. thực hiện trước cho 1 mã chứng khoán mà cảm thấy phù hợp với yêu cầu phân tích đang bàn luận.
 
-2. Thông số kỹ thuật & Thư viện sử dụng
-Ngôn ngữ: Python 3.9+
-
-Dữ liệu: Sử dụng thư viện vnstock hoặc yfinance để lấy dữ liệu chứng khoán Việt Nam.
-
-Thư viện phân tích: pandas, pandas_ta (hoặc talib), numpy.
-
-Lưu trữ: Hệ thống file (Folders/Markdown/CSV).
-
-3. Quy trình xử lý dữ liệu (Logic Phân tích)
-Với mỗi mã trong VN30, Agent cần thực hiện:
-
-A. Chỉ báo kỹ thuật (Technical Indicators)
-SMA 20: Tính đường trung bình động 20 phiên.
-
-Price vs SMA: Xác định vị thế giá so với đường SMA20 (Nằm trên hay dưới).
-
-Volume vs SMA20_Volume: So sánh khối lượng phiên hiện tại với trung bình 20 phiên.
-
-Fibonacci Retreatment: * Tự động xác định Đỉnh (Swing High) và Đáy (Swing Low) gần nhất trong 3-6 tháng.
-
-Tính toán các ngưỡng: 0.236, 0.382, 0.5, 0.618, 0.786.
-
-B. Logic dự đoán (Algorithm)
-Xu hướng Tăng (Bullish): Giá nằm trên SMA20 + Volume đột biến (>1.2 lần trung bình) + Giá vừa bật lại từ hỗ trợ Fibonacci (thường là 0.5 hoặc 0.618).
-
-Xu hướng Giảm (Bearish): Giá thủng SMA20 + Giá chạm kháng cự Fibonacci và quay đầu.
-
-Tỷ lệ thành công: Tính toán dựa trên khoảng cách từ giá hiện tại đến mục tiêu (Target) và cắt lỗ (Stoploss).
-
-4. Cấu trúc lưu trữ (File System)
-Hệ thống phải tự động tạo cấu trúc thư mục như sau:
-
-reports/
-
-SUMMARY_REPORT.csv (File tổng hợp)
-
-VIC/
-
-2023-10-25.md
-
-2023-10-26.md
-
-VNM/
-
-2023-10-25.md
-
-... (các mã khác trong VN30)
-
-5. Chi tiết đầu ra (Output Requirements)
-A. File Report chi tiết mã ([Tên_Mã]/[Ngày].md)
-Nội dung file phải bao gồm:
-
-Thông tin chung: Mã CP, Giá đóng cửa, % Thay đổi.
-
-Phân tích SMA: Trạng thái giá so với SMA20, tín hiệu Volume.
-
-Phân tích Fibonacci: Ngưỡng hỗ trợ/kháng cự gần nhất.
-
-Dự đoán:
-
-Xu hướng: (Tăng/Giảm/Đi ngang)
-
-Giá dự báo (Target): [Giá]
-
-Cắt lỗ (Stoploss): [Giá]
-
-Tỷ lệ thành công: [%]
-
-Lý do: Giải thích ngắn gọn bằng text dựa trên logic SMA và Fibo.
-
-B. File Report tổng hợp (SUMMARY_REPORT.csv)
-Cập nhật mỗi khi chạy tool:
-| Ngày | Mã | Giá Hiện Tại | Dự đoán | Target | Tỷ lệ thành công | Kết quả thực tế |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 2023-10-25 | ACB | 22.5 | Tăng | 24.0 | 75% | (Để trống để cập nhật sau) |
-
-6. Tính năng kiểm chứng (Backtest/Tracking)
-Công cụ cần có hàm kiểm tra: Khi chạy tool vào ngày hôm sau, nó sẽ mở file SUMMARY_REPORT.csv, kiểm tra các dự đoán cũ. Nếu giá chạm Target hoặc Stoploss thì ghi nhận vào cột "Kết quả thực tế" là Đúng hoặc Sai.
+4. tóm tắt flow sẽ là:
+- Xây dựng bộ dữ liệu mẫu cho 1 mã chứng khoán từ năm 2025 đến hiện tại.
+- Giã sử mỗi ngày đều có lệnh T+ với 100 cổ phiếu, có take profit và stop loss cụ thể.
+- từ bộ giữ liệu trên có thể dụng các phân tích kỹ thuật khác nhau để phân tích và đưa ra gợi ý về thời gian T+ và mức take profit, stop loss hợp lý. có thể là 1 nhóm các phân tích kỹ thuật phù hợp với nhau. 
+- tổng hợp tỷ lệ thành công của từng phân tích kỹ thuật để đánh giá hiệu quả của chúng. từ đó tìm ra bộ phân tích kỹ thuật có tỷ lệ thành công cao để sử dụng lâu dài.
+- sau khi đến ngày kết thúc của take profit, stop loss dự kiến sẽ có phần đánh giá lại xem nếu như đánh T+ theo gợi ý thì sẽ lãi hay lỗ bao nhiêu, để từ đó có thể đánh giá được hiệu quả của gợi ý đó.
+- cuối cùng sẽ có phần tổng kết lại hiệu quả của từng phân tích kỹ thuật và gợi ý để đưa ra quyết định đầu tư tốt hơn trong tương lai.

@@ -31,8 +31,21 @@ FIB_LEVELS = [0.0, 0.236, 0.382, 0.5, 0.618, 0.786, 1.0]
 # ── File Paths ────────────────────────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 REPORTS_DIR = os.path.join(BASE_DIR, "reports")
+DATA_DIR = os.path.join(BASE_DIR, "data")
 SUMMARY_CSV_PATH = os.path.join(REPORTS_DIR, "SUMMARY_REPORT.csv")
 LOG_PATH = os.path.join(REPORTS_DIR, "run.log")
+
+# ── Simulation ─────────────────────────────────────────────────────────────────
+SIMULATION_START_DATE = "2025-01-01"
+SIMULATION_SYMBOL = "HPG"
+SIMULATION_SHARES = 100
+T_PLUS_MIN = 3
+T_PLUS_MAX = 5
+
+# ── Simulation Output Paths ───────────────────────────────────────────────────
+SIMULATION_TRADES_CSV = os.path.join(REPORTS_DIR, "SIMULATION_TRADES.csv")
+STRATEGY_COMPARISON_CSV = os.path.join(REPORTS_DIR, "STRATEGY_COMPARISON.csv")
+OPEN_POSITIONS_CSV = os.path.join(REPORTS_DIR, "OPEN_POSITIONS.csv")
 
 # ── CSV Column Definitions ────────────────────────────────────────────────────
 CSV_COLUMNS = [
